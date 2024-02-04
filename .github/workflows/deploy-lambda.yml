@@ -1,0 +1,39 @@
+name: Deploy Lambda
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Deploy Lambda
+        run: |
+          # Asumiendo que tu código de Lambda está en una carpeta llamada 'lambda'
+          # cd lambda
+
+          # Empaqueta el código
+          zip -r saludar.zip .
+
+          # Actualiza la Lambda en AWS
+          aws lambda update-function-code \
+            --function-name saludar \
+            --zip-file fileb://saludar.zip
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: NOMBRE_DE_TU_REGION_AWS
