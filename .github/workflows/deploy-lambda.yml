@@ -17,12 +17,14 @@ jobs:
           ls ${{ github.workspace }}
           cd ${{ github.workspace }}
           cd saludar
+          pwd
           # Empaqueta el código
           zip -r saludar.zip .
       - name: AWS variables
         run: |
           pwd
           ls ${{ github.workspace }}
+          cd saludar
 
           # Actualiza la Lambda en AWS
           aws lambda update-function-code \
