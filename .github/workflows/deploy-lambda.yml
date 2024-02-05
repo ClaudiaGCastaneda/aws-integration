@@ -15,9 +15,12 @@ jobs:
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
-
+          cd ${{ github.workspace }}
           # Empaqueta el código
-          zip -r ${{ github.workspace }} saludar.zip .
+          zip -r saludar.zip .
+      - name: AWS variables
+        run: |
+          pwd
           ls ${{ github.workspace }}
 
           # Actualiza la Lambda en AWS
