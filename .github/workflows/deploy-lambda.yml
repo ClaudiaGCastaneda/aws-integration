@@ -16,6 +16,7 @@ jobs:
         run: |
           ls ${{ github.workspace }}
           cd ${{ github.workspace }}
+          cd saludar
           # Empaqueta el código
           zip -r saludar.zip .
       - name: AWS variables
