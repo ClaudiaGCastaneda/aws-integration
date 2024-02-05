@@ -15,4 +15,18 @@ jobs:
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
+
+          # Empaqueta el código
+          zip -r ${{ github.workspace }} saludar.zip .
+          ls ${{ github.workspace }}
+
+          # Actualiza la Lambda en AWS
+          aws lambda update-function-code \
+            --function-name saludar \
+            --zip-file fileb://saludar.zip
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: NOMBRE_DE_TU_REGION_AWS
+
       - run: echo "🍏 This job's status is ${{ job.status }}."
